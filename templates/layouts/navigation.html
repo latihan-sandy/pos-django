@@ -1,0 +1,112 @@
+<ul class="nav navbar-nav navbar-right sidebar-menu">
+
+
+    {% if user.is_authenticated %}
+    <li {% if request.path == '/dashboard' %} class="active" {% endif %}>
+        <a href="{% url 'dashboard.index' %}"><i
+                class="fa fa-dashboard"></i>&nbsp;Dashboard</a>
+    </li>
+    {% load custom %}
+    <li class="dropdown {% route_active request.path 'master'  %}">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-database"></i>&nbsp;Master Data <b
+                class="caret"></b></a>
+        <ul class="dropdown-menu treeview-menu">
+            <li>
+                <a href="{% url 'brands.index' %}">
+                    <i class="fa fa-car"></i>&nbsp;Brand
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'categories.index' %}">
+                    <i class="fa fa-tags"></i>&nbsp;Category
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'customers.index' %}">
+                    <i class="fa fa-users"></i>&nbsp;Customers
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'products.index' %}">
+                    <i class="fa fa-space-shuttle"></i>&nbsp;Product
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'suppliers.index' %}">
+                    <i class="fa fa-truck"></i>&nbsp;Supplier
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'types.index' %}">
+                    <i class="fa fa-rocket"></i>&nbsp;Types
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="{% url 'groups.index' %}">
+                    <i class="fa fa-key"></i>&nbsp;Role
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'users.index' %}">
+                    <i class="fa fa-user"></i>&nbsp;User
+                </a>
+            </li>
+        </ul>
+    </li>
+
+   <li class="dropdown {% route_active request.path 'transaction'  %}">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-money"></i>&nbsp;Transaction <b
+                class="caret"></b></a>
+        <ul class="dropdown-menu treeview-menu">
+            <li>
+                <a href="{% url 'purchases.index' %}">
+                    <i class="fa fa-cart-arrow-down"></i>&nbsp;Purchases
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'sales.index' %}">
+                    <i class="fa fa-cart-plus"></i>&nbsp;Sales
+                </a>
+            </li>
+
+        </ul>
+    </li>
+
+    <li {% if request.path == '/reports/' %} class="active" {% endif %}>
+        <a href="{% url 'reports.index' %}"><i class="fa fa-line-chart"></i>&nbsp;Report</a>
+    </li>
+
+    <li class="dropdown {% route_active request.path 'account'  %}">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-plus"></i>&nbsp;{{ user.username }} <b
+                class="caret"></b></a>
+        <ul class="dropdown-menu treeview-menu">
+            <li>
+                <a href="{% url 'users.profile' %}">
+                    <i class="fa fa-user"></i>&nbsp;My Profile
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'users.change_password' %}">
+                    <i class="fa fa-key"></i>&nbsp;Change Password
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'logout' %}">
+                    <i class="fa fa-sign-out"></i>&nbsp;Sign out
+                </a>
+            </li>
+
+        </ul>
+    </li>
+    {% else %}
+
+    <li>
+        <a href="javascript:void(0);"><i class="fa fa-user"></i>&nbsp;Author by Sandy Andryanto</a>
+    </li>
+
+    {% endif %}
+
+
+
+</ul>

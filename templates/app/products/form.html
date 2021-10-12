@@ -1,0 +1,200 @@
+{% extends 'layouts/base.html' %} {% block title %} {{ page_name }} {% endblock %} {% block content %} {% load static %}
+
+<h1 class="page-header"> {{ page_name }}
+    <small>Management</small>
+</h1>
+
+<ol class="breadcrumb">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="javascript:void(0);">Master</a></li>
+    <li><a href="{% url 'products.index' %}">{{ page_name }}</a></li>
+    {% if type == 'create' %}
+    <li class="active">Create New</li>
+    {% else %}
+    <li class="active">Edit Data</li>
+    {% endif %}
+</ol>
+
+{% include "layouts/alert.html" %}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="clearfix">
+            <div class="pull-left">
+                {% if type == 'create' %}
+                <i class="fa fa-plus"></i>&nbsp;<strong>Create New</strong> {% else %}
+                <i class="fa fa-edit"></i>&nbsp;<strong>Edit Data</strong> {% endif %}
+            </div>
+            <div class="pull-right">
+                <a href="{% url 'products.index' %}" class="btn btn-sm btn-info">
+                    <i class="fa fa-rotate-left"></i>&nbsp;Back
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+
+        <form method="POST" class="form-horizontal" id="form-submit" role="form" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="form-group {% if form.errors.sku %} has-error {% endif %}">
+                <label class="control-label col-sm-2" for="id_sku">SKU :</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="id_sku" name="sku" value="{{ form.instance.sku }}"> {% if form.errors.sku %}
+                    <span class="help-block">
+                        <strong>{{ form.errors.sku }}</strong>
+                    </span> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="id_image">Image :</label>
+                <div class="col-sm-10">
+                    <input type="file" class="file-input-image"  name="file_image">
+                    {% if form.instance.image %}
+                    <input type="hidden" class="file-input-image-preview" value="{% static 'uploads' %}/{{ form.instance.image }}" /> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group {% if form.errors.name %} has-error {% endif %}">
+                <label class="control-label col-sm-2" for="id_name">Name :</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="id_name" name="name" value="{{ form.instance.name }}"> {% if form.errors.name %}
+                    <span class="help-block">
+                         <strong>{{ form.errors.name }}</strong>
+                     </span> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group {% if form.errors.brand %} has-error {% endif %}">
+                <label class="control-label col-sm-2" for="id_brand">Brand :</label>
+                <div class="col-sm-10">
+                    {{ form.brand }} {% if form.errors.brand %}
+                    <span class="help-block">
+                        <strong>{{ form.errors.brand }}</strong>
+                    </span> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group {% if form.errors.genre %} has-error {% endif %}">
+                <label class="control-label col-sm-2" for="id_genre">Type :</label>
+                <div class="col-sm-10">
+                    {{ form.genre }} {% if form.errors.genre %}
+                    <span class="help-block">
+                         <strong>{{ form.errors.genre }}</strong>
+                     </span> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group {% if form.errors.supplier %} has-error {% endif %}">
+                <label class="control-label col-sm-2" for="id_supplier">Supplier :</label>
+                <div class="col-sm-10">
+                    {{ form.supplier }} {% if form.errors.supplier %}
+                    <span class="help-block">
+                         <strong>{{ form.errors.supplier }}</strong>
+                     </span> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group {% if form.errors.categories %} has-error {% endif %}">
+                <label class="control-label col-sm-2" for="id_categories">Categories :</label>
+                <div class="col-sm-10">
+                    {{ form.categories }} {% if form.errors.categories %}
+                    <span class="help-block">
+                         <strong>{{ form.errors.categories }}</strong>
+                     </span> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group {% if form.errors.price_purchase %} has-error {% endif %}">
+                <label class="control-label col-sm-2" for="id_price_purchase">Price Purchase :</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="id_price_purchase" name="price_purchase" value="{{ form.instance.price_purchase }}"> {% if form.errors.price_purchase %}
+                    <span class="help-block">
+                        <strong>{{ form.errors.price_purchase }}</strong>
+                    </span> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group {% if form.errors.price_sales %} has-error {% endif %}">
+                <label class="control-label col-sm-2" for="id_price_sales">Price Sales :</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="id_price_sales" name="price_sales" value="{{ form.instance.price_sales }}" readonly="readonly"> {% if form.errors.price_sales %}
+                    <span class="help-block">
+                        <strong>{{ form.errors.price_sales }}</strong>
+                    </span> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group {% if form.errors.price_profit %} has-error {% endif %}">
+                <label class="control-label col-sm-2" for="id_price_profit">Profit (%) :</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="id_price_profit" name="price_profit" value="{{ form.instance.price_profit }}"> {% if form.errors.price_profit %}
+                    <span class="help-block">
+                         <strong>{{ form.errors.price_profit }}</strong>
+                     </span> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group {% if form.errors.stock %} has-error {% endif %}">
+                <label class="control-label col-sm-2" for="id_stock">Stock :</label>
+                <div class="col-sm-10">
+                    <input type="number" class="form-control" id="id_stock" name="stock" value="{{ form.instance.stock }}"> {% if form.errors.stock %}
+                    <span class="help-block">
+                         <strong>{{ form.errors.stock }}</strong>
+                     </span> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group {% if form.errors.date_expired %} has-error {% endif %}">
+                <label class="control-label col-sm-2" for="id_date_expired">Date Expired :</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control input-datepicker" id="id_date_expired" name="date_expired" value="{{ form.instance.date_expired|date:'Y-m-d' }}"> {% if form.errors.date_expired %}
+                    <span class="help-block">
+                          <strong>{{ form.errors.date_expired }}</strong>
+                      </span> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group {% if form.errors.description %} has-error {% endif %}">
+                <label class="control-label col-sm-2" for="id_description">Description :</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="id_description" name="description" rows="5">{{ form.instance.description }}</textarea> {% if form.errors.description %}
+                    <span class="help-block">
+                        <strong>{{ form.errors.description }}</strong>
+                    </span> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group {% if form.errors.notes %} has-error {% endif %}">
+                <label class="control-label col-sm-2" for="id_notes">Notes :</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="id_notes" name="notes" rows="5">{{ form.instance.notes }}</textarea> {% if form.errors.notes %}
+                    <span class="help-block">
+                        <strong>{{ form.errors.notes }}</strong>
+                    </span> {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa fa-save"></i>&nbsp;Save
+                    </button>
+                    <button type="reset" class="btn btn-warning">
+                        <i class="fa fa-refresh"></i>&nbsp;Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel-footer"></div>
+</div>
+
+
+
+{% csrf_token %} {% endblock %} {% block scripts %} {% load static %} {% load custom %}
+<script src="{% static 'scripts/products.js' %}?{% random_uuid %}"></script>
+{% endblock %}

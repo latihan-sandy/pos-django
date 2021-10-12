@@ -1,0 +1,152 @@
+{% extends 'layouts/base.html' %} {% block title %} {{ page_name }} {% endblock %} {% block content %}
+
+<h1 class="page-header"> {{ page_name }}
+    <small>Transaction</small>
+</h1>
+
+<ol class="breadcrumb">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="javascript:void(0);">Transaction</a></li>
+    <li><a href="{% url 'sales.index' %}">{{ page_name }}</a></li>
+    <li class="active">Manage Order</li>
+</ol>
+
+{% include "layouts/alert.html" %}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="clearfix">
+            <div class="pull-left">
+                <i class="fa fa-edit"></i>&nbsp;<strong>Manage Order</strong>
+            </div>
+            <div class="pull-right">
+                <a href="{% url 'sales.index' %}" class="btn btn-sm btn-info">
+                    <i class="fa fa-rotate-left"></i>&nbsp;Back
+                </a>
+                <a href="{% url 'sales.delete' model.id %}" class="btn btn-sm btn-danger" id="btn-delete-data">
+                    <i class="fa fa-trash"></i>&nbsp;Delete
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form method="POST" class="" id="form-invoice" role="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ model.id }}" />
+
+            <div class="form-group col-md-3">
+                <label for="name">Invoice Date</label>
+                <input type="text" class="form-control" value="{{ model.created_at }}" readonly="readonly" />
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="name">Invoice Number</label>
+                <input type="text" class="form-control" value="{{ model.invoice_number }}" readonly="readonly" />
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="name">Customer</label>
+                <select class="select2 form-control" name="customer" id="customer_id">
+                    <option disabled selected>Select Customer</option>
+                    {% for row in customers %}
+                        <option value="{{ row.id }}">{{ row.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="name">Casheir</label>
+                <input type="text" class="form-control" value="{{ model.casheir }}" readonly="readonly" />
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="container-fluid table-responsive">
+                <table class="table" id="table-invoice">
+                    <thead>
+                        <tr>
+                            <th> Product</th>
+                            <th width="200">Price</th>
+                            <th width="90">Stock</th>
+                            <th width="90">Qty</th>
+                            <th width="200">Total</th>
+                            <th width="70">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5"></td>
+                            <td>
+                                <a href="javascript:void(0);" class="btn btn-sm btn-info" id="btn-add">
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="form-group col-md-2">
+                <label for="name">Subtotal</label>
+                <input type="number" step="any" id="subtotal" name="subtotal" class="form-control" value="{{ model.subtotal }}" readonly="readonly" />
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="name">Discount (5%)</label>
+                <input type="number" step="any" id="discount" name="discount" class="form-control" value="{{ model.discount }}" readonly="readonly" />
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="name">Tax (10%)</label>
+                <input type="number" step="any" id="tax" name="tax" class="form-control" value="{{ model.tax }}" readonly="readonly" />
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="name">Grandtotal</label>
+                <input type="number" step="any" id="grandtotal" name="grandtotal" class="form-control" value="{{ model.grandtotal }}" readonly="readonly" />
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="name">Petty Cash</label>
+                <input type="number" step="any" id="cash" name="cash" class="form-control" value="{{ model.cash }}" />
+            </div>
+
+            <div class="form-group col-md-2">
+                <label for="name">Change</label>
+                <input type="number" step="any" id="change" name="change" class="form-control" value="{{ model.change }}" readonly="readonly" />
+            </div>
+
+
+            <div class="clearfix"></div>
+            <hr>
+
+            <div class="form-group">
+                <div class="clearfix">
+                    <div class="pull-left">
+                        <button type="submit" class="btn btn-success">
+                                <i class="fa fa-save"></i>&nbsp;Save & Finish
+                            </button>
+                    </div>
+                    <div class="pull-right">
+                        <button type="reset" class="btn btn-warning">
+                                <i class="fa fa-refresh"></i>&nbsp;Reset
+                            </button>
+                    </div>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="panel-footer"></div>
+</div>
+
+
+
+{% csrf_token %} {% endblock %} {% block scripts %} {% load static %} {% load custom %}
+<script src="{% static 'scripts/sales.js' %}?{% random_uuid %}"></script>
+{% endblock %}

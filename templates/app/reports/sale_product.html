@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+    <meta name="author" content="Sandy Andryanto">
+    <title> Point Of Sale - Print Report Sale Order</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="">
+        <div class="container-fluid table-responsive">
+            <h1 class='text-center'>
+                SALE ORDER REPORT BY PRODUCT
+            </h1>
+            <hr>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Brand</th>
+                        <th>Type</th>
+                        <th>Customer</th>
+                        <th>SKU</th>
+                        <th>Product Name</th>
+                        <th>Total Items</th>
+                        <th>Total Purchase</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        <td>{{ row.brand_name }}</td>
+                        <td>{{ row.type_name }}</td>
+                        <td>{{ row.customer_name }}</td>
+                        <td>{{ row.product_sku }}</td>
+                        <td>{{ row.product_name }}</td>
+                        <td>{{ row.total_buy }}</td>
+                        <td>{{ row.total_purchase }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr class="text-center">
+                        <td colspan="7">
+                            -- No Data --
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

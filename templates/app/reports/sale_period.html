@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Hello World">
+    <meta name="author" content="Sandy Andryanto">
+    <title> Point Of Sale - Print Report Sale Order</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <div class="">
+        <div class="container-fluid table-responsive">
+            <h1 class='text-center'>
+                SALE ORDER REPORT
+            </h1>
+            <hr> {% for transaction in data %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="2">Invoice Date : {{ transaction.invoice_date }}</th>
+                        <th colspan="2">Invoice Number : {{ transaction.invoice_number }}</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Customer : {{ transaction.customer }}</th>
+                        <th colspan="2">Casheir : {{ transaction.casheir }}</th>
+                    </tr>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% load custom %} {% detail_transaction transaction %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="2">Discount : {{ transaction.discount }}</th>
+                        <th colspan="2">Tax : {{ transaction.tax }}</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Subtotal : {{ transaction.subtotal }}</th>
+                        <th colspan="2">Grand Total : {{ transaction.grandtotal }}</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Petty Cash : {{ transaction.cash }}</th>
+                        <th colspan="2">Change : {{ transaction.change }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+            <hr> {% empty %}
+            <tr class='text-center'>
+                <td colspan='4'>
+                    -- No Items --
+                </td>
+            </tr>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

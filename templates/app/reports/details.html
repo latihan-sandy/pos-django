@@ -1,0 +1,14 @@
+{% for detail in data %}
+<tr class='text-left'>
+    <td>{{ detail.product.sku }} - {{ detail.product.name }}</td>
+    <td>{{ detail.price }}</td>
+    <td>{{ detail.qty }}</td>
+    <td>{{ detail.total }}</td>
+</tr>
+{% empty %}
+<tr class='text-center'>
+    <td colspan='4'>
+        -- No Items --
+    </td>
+</tr>
+{% endfor %}
